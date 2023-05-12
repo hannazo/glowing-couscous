@@ -33,11 +33,13 @@ registerRoute(
       // CSS
       request.destination === 'style' ||
       // JavaScript
-      request.destination === 'script'
+      request.destination === 'script' ||
+      // Worker
+      request.destination === 'worker'
     );
   },
   new StaleWhileRevalidate({
-    cacheName: 'my-asset-cache',
+    cacheName: 'asset-cache',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -51,7 +53,7 @@ registerRoute(
 registerRoute(
   ({ request }) => request.destination === 'image',
   new CacheFirst({
-    cacheName: 'my-image-cache',
+    cacheName: 'image-cache',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],
